@@ -15,7 +15,7 @@ local RTXTab = Window:MakeTab({
 })
 
 RTXTab:AddButton({
-    Name = "AfterNoon",
+    Name = "ON",
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/GameScript/main/Shader"))()
     end
