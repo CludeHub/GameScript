@@ -1,6 +1,6 @@
 -- GameScript By CludeHub/Paul
 
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/OrionLib/Orion/main/Orion.lua"))()
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/main/source"))()
 local Window = OrionLib:MakeWindow({Name = "GameScript", HidePremium = true})
 
 local HomeTab = Window:MakeTab({
