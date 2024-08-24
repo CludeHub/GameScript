@@ -8,32 +8,6 @@ local HomeTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-local RTXTab = Window:MakeTab({
-	Name = "RTX",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-RTXTab:AddButton({
-    Name = "ON",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/GameScript/main/Shader"))()
-    end
-})
-
-RTXTab:AddButton({
-	Name = "Morning",
-	Callback = function()
-      		print("button pressed")
-  	end    
-})
-
-RTXTab:AddButton({
-	Name = "Night",
-	Callback = function()
-      		print("button pressed")
-  	end    
-})
 
 HomeTab:AddButton({
     Name = "infinite yield",
