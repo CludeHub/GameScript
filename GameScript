@@ -31,3 +31,16 @@ HomeTab:AddButton({
         game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
     end
 })
+
+local ZombieAttackTab = Window:MakeTab({
+    Name = "Zombie Attack",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+ZombieAttackTab:AddButton({
+    Name = "Auto Farm",
+    Callback = function()
+        -- Script not added
+    end
+})
