@@ -81,7 +81,7 @@ Lighting.EnvironmentSpecularScale = 0.2
 Lighting.GlobalShadows = true
 Lighting.OutdoorAmbient = Color3.fromRGB(0,0,0)
 Lighting.ShadowSoftness = 0.2
-Lighting.ClockTime = 17
+Lighting.ClockTime = 14
 Lighting.GeographicLatitude = 45
 Lighting.ExposureCompensation = 0.5
 
