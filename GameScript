@@ -274,3 +274,40 @@ BladeAllTab:AddTextbox({
         game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(value)
     end
 })
+
+local SpeedTab = Window:MakeTab({
+	Name = "Legend of Speed",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+SpeedTab:AddButton({
+	Name = "Blue Orb",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+
+SpeedTab:AddButton({
+	Name = "red Orb",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+
+SpeedTab:AddButton({
+	Name = "yellow Orb",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+
+SpeedTab:AddButton({
+	Name = "gem farm",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+local Section = Tab:AddSection({
+	Name = "Teleports"
+})
