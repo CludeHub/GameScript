@@ -1,7 +1,7 @@
--- GameScript by CludeHub/Paul and 1x1x1x1
+-- GameScript
 
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/main/source"))()
-local Window = OrionLib:MakeWindow({Name = "GameScript", HidePremium = true})
+local Window = OrionLib:MakeWindow({Name = "GameScript By CludeHub/Paul", HidePremium = true})
 
 local HomeTab = Window:MakeTab({
     Name = "Home",
@@ -118,6 +118,44 @@ ZombieAttackTab:AddTextbox({
 })
 
 ZombieAttackTab:AddTextbox({
+    Name = "Player Jump",
+    Default = "50",
+    TextDisappear = true,
+    Callback = function(value)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(value)
+    end
+})
+
+local BladeAllTab = Window:MakeTab({
+    Name = "Blade All",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+BladeAllTab:AddButton({
+    Name = "Auto Parry",
+    Callback = function()
+        -- Auto Parry functionality here
+    end
+})
+
+BladeAllTab:AddButton({
+    Name = "Manual Spam",
+    Callback = function()
+        -- Manual Spam functionality here
+    end
+})
+
+BladeAllTab:AddTextbox({
+    Name = "Player Speed",
+    Default = "16",
+    TextDisappear = true,
+    Callback = function(value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(value)
+    end
+})
+
+BladeAllTab:AddTextbox({
     Name = "Player Jump",
     Default = "50",
     TextDisappear = true,
