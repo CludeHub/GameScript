@@ -1,0 +1,33 @@
+-- GameScript By CludeHub/Paul
+
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/OrionLib/Orion/main/Orion.lua"))()
+local Window = OrionLib:MakeWindow({Name = "GameScript", HidePremium = true})
+
+local HomeTab = Window:MakeTab({
+    Name = "Home",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+HomeTab:AddButton({
+    Name = "Shader",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/GameScript/main/Shader"))()
+    end
+})
+
+HomeTab:AddButton({
+    Name = "infinite yield",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+})
+
+HomeTab:AddButton({
+    Name = "rejoin",
+    Callback = function()
+        game.Players.LocalPlayer:Kick("Rejoining...")
+        wait(1)
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+    end
+})
