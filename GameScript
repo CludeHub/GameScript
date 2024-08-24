@@ -322,7 +322,7 @@ end
       		print("button pressed")
   	end    
 })
-local Section = Tab:AddSection({
+local Section = SpeedTab:AddSection({
 	Name = "Teleports"
 })
 SpeedTab:AddButton({
