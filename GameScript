@@ -59,12 +59,12 @@ Bloom.Threshold = 0.8
 Blur.Size = 5
 
 ColorCor.Brightness = 0.1
-ColorCor.Contrast = 0.4
+ColorCor.Contrast = 0.3
 ColorCor.Saturation = -0.2
 ColorCor.TintColor = Color3.fromRGB(255, 235, 203)
 
-SunRays.Intensity = 0.075
-SunRays.Spread = 0.727
+SunRays.Intensity = 0.076
+SunRays.Spread = 0.728
 
 Sky.SkyboxBk = "http://www.roblox.com/asset/?id=151165214"
 Sky.SkyboxDn = "http://www.roblox.com/asset/?id=151165197"
@@ -75,7 +75,7 @@ Sky.SkyboxUp = "http://www.roblox.com/asset/?id=151165227"
 Sky.SunAngularSize = 10
 
 Lighting.Ambient = Color3.fromRGB(2,2,2)
-Lighting.Brightness = 2.25
+Lighting.Brightness = 2.27
 Lighting.ColorShift_Bottom = Color3.fromRGB(0,0,0)
 Lighting.ColorShift_Top = Color3.fromRGB(0,0,0)
 Lighting.EnvironmentDiffuseScale = 0.2
