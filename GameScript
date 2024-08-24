@@ -10,7 +10,7 @@ local HomeTab = Window:MakeTab({
 })
 
 HomeTab:AddButton({
-    Name = "Shader Afternoon",
+    Name = "Shader",
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/GameScript/main/Shader"))()
     end
