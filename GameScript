@@ -56,11 +56,11 @@ Bloom.Intensity = 0.3
 Bloom.Size = 10
 Bloom.Threshold = 0.8
 
-Blur.Size = 0
+Blur.Size = 5
 
 ColorCor.Brightness = 0.1
-ColorCor.Contrast = 0.5
-ColorCor.Saturation = -0.3
+ColorCor.Contrast = 0.4
+ColorCor.Saturation = -0.2
 ColorCor.TintColor = Color3.fromRGB(255, 235, 203)
 
 SunRays.Intensity = 0.075
