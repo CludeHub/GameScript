@@ -60,7 +60,7 @@ end
 })
 
 ZombieAttackTab:AddButton({
-    Name = "HitBox",
+    Name = "Silent Aim",
     Callback = function()
 local uis = game:GetService("UserInputService")
 local cam = game:GetService("Workspace").CurrentCamera
