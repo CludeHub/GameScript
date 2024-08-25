@@ -1,4 +1,5 @@
 -- GameScript
+loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/GameScript/main/Shader-Minecraft"))()
 
 if game.PlaceId == 1240123653 then
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
