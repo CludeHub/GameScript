@@ -1,13 +1,11 @@
 -- GameScript
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/GameScript/main/Shader-Minecraft"))()
-
-if game.PlaceId == 1240123653 then
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local Window = OrionLib:MakeWindow({Name = "GameScript/Zombie Attack", HidePremium = false, SaveConfig = true, ConfigFolder = "CludeHub"})
 
 local Tab1 = Window:MakeTab({
-	Name = "Farms",
+	Name = "Zombie Attack",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
@@ -109,4 +107,3 @@ Character.Humanoid.JumpPower = (Value)
 		print(Value)
 	end	  
 })
-end
