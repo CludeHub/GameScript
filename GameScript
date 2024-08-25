@@ -54,3 +54,62 @@ local s = Instance.new("SunRaysEffect", a)
 s.Enabled = true
 s.Intensity = 0.01
 s.Spread = 0.146
+
+if game.Place.Id == 1240123653 then
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "GameScript/Zombie Attack", HidePremium = false, SaveConfig = true, ConfigFolder = "CludeHub"})
+
+local FarmTab = Window:MakeTab({
+	Name = "Farms",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local PlayerTab = Window:MakeTab({
+	Name = "Player",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+FarmTab:AddButton({
+	Name = "Hitbox",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+
+FarmTab:AddButton({
+	Name = "Silent aim",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+
+FarmTab:AddButton({
+	Name = "Auto Farm",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+
+PlayerTab:AddTextbox({
+	Name = "Player Speed",
+	Default = "16",
+	TextDisappear = true,
+	Callback = function(Value)
+Character.Humanoid.WalkSpeed = tonumber(Value)
+		print(Value)
+	end	  
+})
+
+PlayerTab:AddTextbox({
+	Name = "Player Jump Power",
+	Default = "50",
+	TextDisappear = true,
+	Callback = function(Value)
+Character.Humanoid.JumpPower = tonumber(Value)
+		print(Value)
+	end	  
+})
+
