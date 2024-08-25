@@ -55,7 +55,7 @@ s.Enabled = true
 s.Intensity = 0.01
 s.Spread = 0.146
 
-if game.Place.Id == 1240123653 then
+if game.PlaceId == 1240123653 then
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local Window = OrionLib:MakeWindow({Name = "GameScript/Zombie Attack", HidePremium = false, SaveConfig = true, ConfigFolder = "CludeHub"})
