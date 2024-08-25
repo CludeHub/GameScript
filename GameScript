@@ -59,8 +59,3 @@ local Coasting = loadstring(game:HttpGet(("https://raw.githubusercontent.com/che
 
 local Parry = Coasting:CreateTab("AutoFarms")
 local Parry1 = Parry:CreateSection("Parry")
-
-local Parry2 = Parry1:CreateButton("Auto Parry", function()    
-
-        end  
-    end)
