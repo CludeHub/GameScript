@@ -5,19 +5,19 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 
 local Window = OrionLib:MakeWindow({Name = "GameScript/Zombie Attack", HidePremium = false, SaveConfig = true, ConfigFolder = "CludeHub"})
 
-local FarmTab = Window:MakeTab({
+local Tab1 = Window:MakeTab({
 	Name = "Farms",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
-local PlayerTab = Window:MakeTab({
+local Tab2 = Window:MakeTab({
 	Name = "Player",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
-FarmTab:AddButton({
+Tab1:AddButton({
 	Name = "Hitbox",
 	Callback = function()
 _G.HeadSize = 9
@@ -39,7 +39,7 @@ end
   	end    
 })
 
-FarmTab:AddButton({
+Tab1:AddButton({
 	Name = "Silent aim",
 	Callback = function()
 local uis = game:GetService("UserInputService")
@@ -89,7 +89,7 @@ end)
   	end    
 })
 
-PlayerTab:AddTextbox({
+Tab2:AddTextbox({
 	Name = "Player Speed",
 	Default = "16",
 	TextDisappear = true,
@@ -99,7 +99,7 @@ Character.Humanoid.WalkSpeed = tonumber(Value)
 	end	  
 })
 
-PlayerTab:AddTextbox({
+Tab2:AddTextbox({
 	Name = "Player Jump Power",
 	Default = "50",
 	TextDisappear = true,
