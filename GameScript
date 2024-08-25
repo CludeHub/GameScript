@@ -80,8 +80,8 @@ s.Enabled = true
 s.Intensity = 0.09
 s.Spread = 0.146
 game.Lighting.FogColor = Color3.fromRGB(255, 255, 255)
-game.Lighting.FogEnd = 60
-game.Lighting.FogStart = 40
+game.Lighting.FogEnd = 10
+game.Lighting.FogStart = 8
 
       		print("button pressed")
   	end    
