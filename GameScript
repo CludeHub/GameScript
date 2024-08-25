@@ -1,5 +1,30 @@
 -- GameScript
 
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "GameScript By Clude", HidePremium = false, SaveConfig = true, ConfigFolder = "CludeHub"})
+
+local HomeTab = Window:MakeTab({
+	Name = "Home",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Tab1 = Window:MakeTab({
+	Name = "Zombie Attack",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Tab2 = Window:MakeTab({
+	Name = "Player",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+HomeTab:AddButton({
+	Name = "Shaders",
+	Callback = function()
 local a = game.Lighting
 a.Ambient = Color3.fromRGB(33, 33, 33)
 a.Brightness = 5.69
@@ -54,21 +79,26 @@ local s = Instance.new("SunRaysEffect", a)
 s.Enabled = true
 s.Intensity = 0.09
 s.Spread = 0.146
-
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-
-local Window = OrionLib:MakeWindow({Name = "GameScript By Clude", HidePremium = false, SaveConfig = true, ConfigFolder = "CludeHub"})
-
-local Tab1 = Window:MakeTab({
-	Name = "Zombie Attack",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+      		print("button pressed")
+  	end    
 })
 
-local Tab2 = Window:MakeTab({
-	Name = "Player",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+HomeTab:AddButton({
+	Name = "rejoin",
+	Callback = function()
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+function rejoinGame()
+    local placeId = game.PlaceId
+    local teleportService = game:GetService("TeleportService")
+    teleportService:Teleport(placeId, player)
+end
+
+rejoinGame()
+
+      		print("button pressed")
+  	end    
 })
 
 Tab1:AddButton({
