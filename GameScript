@@ -1,5 +1,5 @@
 -- GameScript
-loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/GameScript/main/Shader-Minecraft"))()
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local Window = OrionLib:MakeWindow({Name = "GameScript/Zombie Attack", HidePremium = false, SaveConfig = true, ConfigFolder = "CludeHub"})
