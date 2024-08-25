@@ -54,8 +54,3 @@ local s = Instance.new("SunRaysEffect", a)
 s.Enabled = true
 s.Intensity = 0.01
 s.Spread = 0.146
-
-local Coasting = loadstring(game:HttpGet(("https://raw.githubusercontent.com/cheesynob39/Coasting/main/Source.lua")))()
-
-local Parry = Coasting:CreateTab("AutoFarms")
-local Parry1 = Parry:CreateSection("Parry")
