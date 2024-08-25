@@ -148,7 +148,7 @@ Tab2:AddTextbox({
 	Default = "16",
 	TextDisappear = true,
 	Callback = function(Value)
-Character.Humanoid.WalkSpeed = tonumber(Value)
+Character.Humanoid.WalkSpeed = (Value)
 		print(Value)
 	end	  
 })
@@ -158,7 +158,7 @@ Tab2:AddTextbox({
 	Default = "50",
 	TextDisappear = true,
 	Callback = function(Value)
-Character.Humanoid.JumpPower = tonumber(Value)
+Character.Humanoid.JumpPower = (Value)
 		print(Value)
 	end	  
 })
