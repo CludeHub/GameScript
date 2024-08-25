@@ -222,11 +222,11 @@ Takayama.TintColor = Color3.fromRGB(235, 214, 204)
 
 Takayama.Parent = game:GetService("Lighting")
 local L = game:GetService("Lighting")
-L.Brightness = 2.14
+L.Brightness = 3.14
 L.ColorShift_Bottom = Color3.fromRGB(11, 0, 20)
 L.ColorShift_Top = Color3.fromRGB(240, 127, 14)
 L.OutdoorAmbient = Color3.fromRGB(34, 0, 49)
-L.ClockTime = 6.7
+L.ClockTime = 12
 L.FogColor = Color3.fromRGB(94, 76, 106)
 L.FogEnd = 1000
 L.FogStart = 0
