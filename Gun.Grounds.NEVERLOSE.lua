@@ -1,6 +1,5 @@
 local NEVERLOSE = loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/SourceCludeLib/refs/heads/main/NerverLoseLibEdited.lua"))()
 
-NEVERLOSE:Theme("nightly") 
 local Window = NEVERLOSE:AddWindow("NEVERLOSE", "GUN GROUNDS")
 
 -- Aimbot
