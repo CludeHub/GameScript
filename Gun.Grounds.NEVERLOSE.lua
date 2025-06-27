@@ -266,7 +266,7 @@ local LocalPlayer = Players.LocalPlayer
 
 --// Aimbot Toggle
 local AimbotEnabled = false
-Example:AddToggle("Enable Aimbot", false, function(val)
+RageMain:AddToggle("Enable Aimbot", false, function(val)
     AimbotEnabled = val
 end)
 
