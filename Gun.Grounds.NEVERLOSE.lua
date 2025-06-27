@@ -257,18 +257,20 @@ end)
 -- Ragebot Tab
 local RageMain = Ragebot:AddSection("Main", "left")
 
+--// Services
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local Camera = workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
+--// Aimbot Toggle
 local AimbotEnabled = false
-
-RageMain:AddToggle('Enable Aimbot', false, function(val)
+Example:AddToggle("Enable Aimbot", false, function(val)
     AimbotEnabled = val
 end)
 
+--// Visibility Check
 local function IsVisible(targetCharacter)
     local origin = Camera.CFrame.Position
     local targetHead = targetCharacter:FindFirstChild("Head")
@@ -284,17 +286,29 @@ local function IsVisible(targetCharacter)
     return false
 end
 
+--// Aimbot Logic
+local currentTarget = nil
+
+local function IsTargetValid(player)
+    return player
+        and player.Character
+        and player.Character:FindFirstChild("Head")
+        and player.Character:FindFirstChild("Humanoid")
+        and player.Character.Humanoid.Health > 0
+        and IsVisible(player.Character)
+end
+
 local function GetClosestVisiblePlayer()
     local closestPlayer = nil
     local shortestDistance = math.huge
     local mousePosition = UserInputService:GetMouseLocation()
 
     for _, player in pairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Head") and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health > 0 then
+        if player ~= LocalPlayer and IsTargetValid(player) then
             local screenPoint, onScreen = Camera:WorldToScreenPoint(player.Character.Head.Position)
             if onScreen then
                 local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - mousePosition).Magnitude
-                if distance < shortestDistance and IsVisible(player.Character) then
+                if distance < shortestDistance then
                     shortestDistance = distance
                     closestPlayer = player
                 end
@@ -304,15 +318,19 @@ local function GetClosestVisiblePlayer()
     return closestPlayer
 end
 
+--// Main Aimbot Loop
 RunService.RenderStepped:Connect(function()
     if AimbotEnabled then
-        local target = GetClosestVisiblePlayer()
-        if target and target.Character and target.Character:FindFirstChild("Head") then
-            Camera.CFrame = CFrame.lookAt(Camera.CFrame.Position, target.Character.Head.Position)
+        if not IsTargetValid(currentTarget) then
+            currentTarget = GetClosestVisiblePlayer()
         end
+        if IsTargetValid(currentTarget) then
+            Camera.CFrame = CFrame.lookAt(Camera.CFrame.Position, currentTarget.Character.Head.Position)
+        end
+    else
+        currentTarget = nil
     end
 end)
-
 local RageEnabled = true
 local SelectedHitbox = "Head"
 local HitchanceThreshold = 90
