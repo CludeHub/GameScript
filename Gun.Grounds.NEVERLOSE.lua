@@ -19,7 +19,10 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 
--- ESP storage
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
 local ESPEnabled = false
 local ESPObjects = {}
 
@@ -36,7 +39,7 @@ local settings = {
     GlowEnabled = false,
 }
 
--- Clear old ESP highlights
+-- Clear all ESP highlights
 local function ClearESP()
     for _, highlight in pairs(ESPObjects) do
         if highlight and highlight.Destroy then
@@ -50,11 +53,16 @@ end
 local function CreateESPForPlayer(player)
     if player == LocalPlayer then return end
     local character = player.Character
-    if not character then return end
+    if not character or not character:IsDescendantOf(game.Workspace) then return end
+
+    -- Destroy existing one if needed
+    if ESPObjects[player] then
+        ESPObjects[player]:Destroy()
+    end
 
     local highlight = Instance.new("Highlight")
     highlight.Name = "ESPHighlight"
-    highlight.FillColor = Color3.fromRGB(255, 255, 0) -- yellow
+    highlight.FillColor = Color3.fromRGB(255, 255, 0) -- Yellow
     highlight.OutlineColor = Color3.fromRGB(255, 255, 0)
     highlight.FillTransparency = 0.5
     highlight.OutlineTransparency = 0
@@ -72,25 +80,37 @@ local function ToggleESP(enabled)
 
     if enabled then
         for _, player in ipairs(Players:GetPlayers()) do
-            if player.Character then
+            if player ~= LocalPlayer then
                 CreateESPForPlayer(player)
-            end
 
-            player.CharacterAdded:Connect(function()
-                task.wait(1)
-                if ESPEnabled then
-                    CreateESPForPlayer(player)
-                end
-            end)
+                -- Handle future respawn
+                player.CharacterAdded:Connect(function()
+                    task.wait(1) -- Small delay to let character fully load
+                    if ESPEnabled then
+                        CreateESPForPlayer(player)
+                    end
+                end)
+            end
         end
     end
 end
 
--- Update DepthMode dynamically based on ThroughWalls setting
+-- Maintain ESP consistency each frame
 RunService.RenderStepped:Connect(function()
     if ESPEnabled then
-        for _, highlight in pairs(ESPObjects) do
-            if highlight and highlight:IsA("Highlight") then
+        for player, highlight in pairs(ESPObjects) do
+            local character = player.Character
+
+            -- Remove if player died
+            if not character or not character:IsDescendantOf(game.Workspace) then
+                if highlight and highlight.Destroy then
+                    highlight:Destroy()
+                end
+                ESPObjects[player] = nil
+
+            -- Reassign adornee if needed
+            elseif highlight and highlight:IsA("Highlight") then
+                highlight.Adornee = character
                 highlight.DepthMode = settings.ThroughWalls and Enum.HighlightDepthMode.AlwaysOnTop or Enum.HighlightDepthMode.Occluded
             end
         end
