@@ -1,6 +1,6 @@
 local NEVERLOSE = loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/SourceCludeLib/refs/heads/main/NerverLoseLibEdited.lua"))()
 
-local Window = NEVERLOSE:AddWindow("NEVERLOSE", "GUN GROUNDS")
+local Window = NEVERLOSE:AddWindow("NEVERLOSE", "CSGO CHEAT")
 
 -- Aimbot
 Window:AddTabLabel("Aimbot")
@@ -16,15 +16,15 @@ local left = Players:AddSection('ESP',"left")
 local right = Players:AddSection('Chams',"right")
 
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
-
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
 local LocalPlayer = Players.LocalPlayer
 
 local ESPEnabled = false
 local ESPObjects = {}
+
+-- Optional enemies folder
+local EnemiesFolder = workspace:FindFirstChild("Enemies")
 
 -- Settings
 local settings = {
@@ -49,75 +49,95 @@ local function ClearESP()
     ESPObjects = {}
 end
 
--- Create ESP using Highlight
-local function CreateESPForPlayer(player)
-    if player == LocalPlayer then return end
-    local character = player.Character
-    if not character or not character:IsDescendantOf(game.Workspace) then return end
+-- Create Highlight ESP for a character or NPC
+local function CreateESPForModel(id, model)
+    if not model or not model:IsDescendantOf(workspace) then return end
 
-    -- Destroy existing one if needed
-    if ESPObjects[player] then
-        ESPObjects[player]:Destroy()
+    -- Destroy existing
+    if ESPObjects[id] then
+        ESPObjects[id]:Destroy()
     end
 
     local highlight = Instance.new("Highlight")
     highlight.Name = "ESPHighlight"
-    highlight.FillColor = Color3.fromRGB(255, 255, 0) -- Yellow
+    highlight.FillColor = Color3.fromRGB(255, 255, 0)
     highlight.OutlineColor = Color3.fromRGB(255, 255, 0)
     highlight.FillTransparency = 0.5
     highlight.OutlineTransparency = 0
     highlight.DepthMode = settings.ThroughWalls and Enum.HighlightDepthMode.AlwaysOnTop or Enum.HighlightDepthMode.Occluded
-    highlight.Adornee = character
-    highlight.Parent = game:GetService("CoreGui")
+    highlight.Adornee = model
+    highlight.Parent = CoreGui
 
-    ESPObjects[player] = highlight
+    ESPObjects[id] = highlight
 end
 
--- Toggle ESP
+-- Toggle ESP ON/OFF
 local function ToggleESP(enabled)
     ESPEnabled = enabled
     ClearESP()
 
     if enabled then
+        -- Add ESP for players
         for _, player in ipairs(Players:GetPlayers()) do
             if player ~= LocalPlayer then
-                CreateESPForPlayer(player)
-
-                -- Handle future respawn
-                player.CharacterAdded:Connect(function()
-                    task.wait(1) -- Small delay to let character fully load
+                local char = player.Character
+                if char then
+                    CreateESPForModel(player, char)
+                end
+                player.CharacterAdded:Connect(function(c)
+                    task.wait(1)
                     if ESPEnabled then
-                        CreateESPForPlayer(player)
+                        CreateESPForModel(player, c)
                     end
                 end)
             end
         end
+
+        -- Add ESP for NPCs in "Enemies" folder
+        if EnemiesFolder then
+            for _, npc in ipairs(EnemiesFolder:GetChildren()) do
+                CreateESPForModel(npc, npc)
+            end
+
+            -- Automatically add for future spawned NPCs
+            EnemiesFolder.ChildAdded:Connect(function(npc)
+                task.wait(1)
+                if ESPEnabled then
+                    CreateESPForModel(npc, npc)
+                end
+            end)
+        end
     end
 end
 
--- Maintain ESP consistency each frame
+-- Update each frame
 RunService.RenderStepped:Connect(function()
     if ESPEnabled then
-        for player, highlight in pairs(ESPObjects) do
-            local character = player.Character
+        for id, highlight in pairs(ESPObjects) do
+            if not highlight or not highlight:IsA("Highlight") then continue end
 
-            -- Remove if player died
-            if not character or not character:IsDescendantOf(game.Workspace) then
-                if highlight and highlight.Destroy then
-                    highlight:Destroy()
-                end
-                ESPObjects[player] = nil
+            local model = nil
 
-            -- Reassign adornee if needed
-            elseif highlight and highlight:IsA("Highlight") then
-                highlight.Adornee = character
+            -- Get updated model
+            if typeof(id) == "Instance" then
+                model = id -- NPC
+            elseif typeof(id) == "Player" then
+                model = id.Character
+            end
+
+            -- Check still exists
+            if not model or not model:IsDescendantOf(workspace) then
+                highlight:Destroy()
+                ESPObjects[id] = nil
+            else
+                highlight.Adornee = model
                 highlight.DepthMode = settings.ThroughWalls and Enum.HighlightDepthMode.AlwaysOnTop or Enum.HighlightDepthMode.Occluded
             end
         end
     end
 end)
 
--- UI Toggles (Left Panel)
+-- UI Toggle controls
 left:AddToggle("Enable ESP", false, function(v)
     ToggleESP(v)
 end)
