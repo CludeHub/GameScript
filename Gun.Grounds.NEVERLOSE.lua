@@ -277,12 +277,14 @@ end)
 -- Ragebot Tab
 local RageMain = Ragebot:AddSection("Main", "left")
 
---// Services
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local Camera = workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
+
+-- Optional NPC Folder
+local EnemiesFolder = workspace:FindFirstChild("Enemies")
 
 --// Aimbot Toggle
 local AimbotEnabled = false
@@ -309,43 +311,46 @@ end
 --// Aimbot Logic
 local currentTarget = nil
 
-local function IsTargetValid(player)
-    return player
-        and player.Character
-        and player.Character:FindFirstChild("Head")
-        and player.Character:FindFirstChild("Humanoid")
-        and player.Character.Humanoid.Health > 0
-        and IsVisible(player.Character)
+local function IsTargetValid(model)
+    return model
+        and model:FindFirstChild("Head")
+        and model:FindFirstChild("Humanoid")
+        and model.Humanoid.Health > 0
+        and IsVisible(model)
 end
 
-local function GetClosestVisiblePlayer()
-    local closestPlayer = nil
+local function GetClosestVisibleTarget()
+    local closest = nil
     local shortestDistance = math.huge
     local mousePosition = UserInputService:GetMouseLocation()
 
-    for _, player in pairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and IsTargetValid(player) then
-            local screenPoint, onScreen = Camera:WorldToScreenPoint(player.Character.Head.Position)
-            if onScreen then
-                local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - mousePosition).Magnitude
-                if distance < shortestDistance then
-                    shortestDistance = distance
-                    closestPlayer = player
+    -- Check NPCs in "Enemies" folder
+    if EnemiesFolder then
+        for _, enemy in ipairs(EnemiesFolder:GetChildren()) do
+            if IsTargetValid(enemy) then
+                local screenPoint, onScreen = Camera:WorldToScreenPoint(enemy.Head.Position)
+                if onScreen then
+                    local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - mousePosition).Magnitude
+                    if distance < shortestDistance then
+                        shortestDistance = distance
+                        closest = enemy
+                    end
                 end
             end
         end
     end
-    return closestPlayer
+
+    return closest
 end
 
 --// Main Aimbot Loop
 RunService.RenderStepped:Connect(function()
     if AimbotEnabled then
         if not IsTargetValid(currentTarget) then
-            currentTarget = GetClosestVisiblePlayer()
+            currentTarget = GetClosestVisibleTarget()
         end
         if IsTargetValid(currentTarget) then
-            Camera.CFrame = CFrame.lookAt(Camera.CFrame.Position, currentTarget.Character.Head.Position)
+            Camera.CFrame = CFrame.lookAt(Camera.CFrame.Position, currentTarget.Head.Position)
         end
     else
         currentTarget = nil
