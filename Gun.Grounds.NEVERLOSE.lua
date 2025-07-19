@@ -22,24 +22,14 @@ local LocalPlayer = Players.LocalPlayer
 
 local ESPEnabled = false
 local ESPObjects = {}
-
--- Optional enemies folder
 local EnemiesFolder = workspace:FindFirstChild("Enemies")
 
 -- Settings
 local settings = {
-    ThroughWalls = false,
-    BulletTracer = false,
-    DynamicBoxes = false,
-    InGameRadar = false,
-    Dormant = false,
-    SharedESP = false,
-    SoundESP = false,
-    OffscreenESP = "Blinking Arrows",
-    GlowEnabled = false,
+    ThroughWalls = false
 }
 
--- Clear all ESP highlights
+-- Clear all ESP
 local function ClearESP()
     for _, highlight in pairs(ESPObjects) do
         if highlight and highlight.Destroy then
@@ -49,11 +39,11 @@ local function ClearESP()
     ESPObjects = {}
 end
 
--- Create Highlight ESP for a character or NPC
+-- Create highlight for any model
 local function CreateESPForModel(id, model)
     if not model or not model:IsDescendantOf(workspace) then return end
 
-    -- Destroy existing
+    -- Remove old
     if ESPObjects[id] then
         ESPObjects[id]:Destroy()
     end
@@ -71,61 +61,65 @@ local function CreateESPForModel(id, model)
     ESPObjects[id] = highlight
 end
 
--- Toggle ESP ON/OFF
+-- Add ESP to all players
+local function SetupPlayerESP(player)
+    if player == LocalPlayer then return end
+    if player.Character then
+        CreateESPForModel(player, player.Character)
+    end
+    player.CharacterAdded:Connect(function(char)
+        task.wait(1)
+        if ESPEnabled then
+            CreateESPForModel(player, char)
+        end
+    end)
+end
+
+-- Add ESP to all NPCs
+local function SetupEnemyESP(npc)
+    if npc:IsA("Model") then
+        CreateESPForModel(npc, npc)
+    end
+end
+
+-- Toggle ESP
 local function ToggleESP(enabled)
     ESPEnabled = enabled
     ClearESP()
 
     if enabled then
-        -- Add ESP for players
+        -- Players
         for _, player in ipairs(Players:GetPlayers()) do
-            if player ~= LocalPlayer then
-                local char = player.Character
-                if char then
-                    CreateESPForModel(player, char)
-                end
-                player.CharacterAdded:Connect(function(c)
-                    task.wait(1)
-                    if ESPEnabled then
-                        CreateESPForModel(player, c)
-                    end
-                end)
-            end
+            SetupPlayerESP(player)
         end
+        Players.PlayerAdded:Connect(SetupPlayerESP)
 
-        -- Add ESP for NPCs in "Enemies" folder
+        -- Enemies
         if EnemiesFolder then
             for _, npc in ipairs(EnemiesFolder:GetChildren()) do
-                CreateESPForModel(npc, npc)
+                SetupEnemyESP(npc)
             end
-
-            -- Automatically add for future spawned NPCs
             EnemiesFolder.ChildAdded:Connect(function(npc)
                 task.wait(1)
                 if ESPEnabled then
-                    CreateESPForModel(npc, npc)
+                    SetupEnemyESP(npc)
                 end
             end)
         end
     end
 end
 
--- Update each frame
+-- Update every frame
 RunService.RenderStepped:Connect(function()
     if ESPEnabled then
         for id, highlight in pairs(ESPObjects) do
-            if not highlight or not highlight:IsA("Highlight") then continue end
-
-            local model = nil
-
-            -- Get updated model
-            if typeof(id) == "Instance" then
-                model = id -- NPC
-            elseif typeof(id) == "Player" then
+            local model
+            if typeof(id) == "Player" then
                 model = id.Character
+            elseif typeof(id) == "Instance" then
+                model = id
             end
 
-            -- Check still exists
             if not model or not model:IsDescendantOf(workspace) then
                 highlight:Destroy()
                 ESPObjects[id] = nil
@@ -137,7 +131,7 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- UI Toggle controls
+-- Your UI Toggles
 left:AddToggle("Enable ESP", false, function(v)
     ToggleESP(v)
 end)
