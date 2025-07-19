@@ -1,5 +1,7 @@
 local NEVERLOSE = loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/SourceCludeLib/refs/heads/main/NerverLoseLibEdited.lua"))()
+local LOADER = loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/SourceCludeLib/refs/heads/main/loader.Function.lua"))()
 
+LOADER:Add(function()
 local Window = NEVERLOSE:AddWindow("NEVERLOSE", "CSGO CHEAT")
 
 -- Aimbot
@@ -994,3 +996,4 @@ local InventorySection = Inventory:AddSection("Skin Changer", "left")
 InventorySection:AddToggle("Enable Skin Changer", false, function() end)
 InventorySection:AddDropdown("Weapon", {"AWP","AK-47","Deagle"}, 1, function() end)
 InventorySection:AddDropdown("Skin", {"Dragon Lore","Fire Serpent","Emerald"}, 1, function() end)
+	end)
