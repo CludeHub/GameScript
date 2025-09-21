@@ -1,1 +1,1 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/Cludead/refs/heads/main/Protected_7987096094634536.lua.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/ParasScript/refs/heads/main/Protected_4700836050095591.lua.txt"))()
